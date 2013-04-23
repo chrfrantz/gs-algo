@@ -34,6 +34,7 @@ package org.graphstream.algorithm.generator;
 import java.util.Random;
 
 import org.graphstream.algorithm.Toolkit;
+import org.graphstream.algorithm.util.MersenneTwister;
 import org.graphstream.graph.Edge;
 
 /**
@@ -115,7 +116,7 @@ public class DorogovtsevMendesGenerator extends BaseGenerator {
 	 * @param random
 	 *            The number generator to use.
 	 */
-	public DorogovtsevMendesGenerator(Random random) {
+	public DorogovtsevMendesGenerator(MersenneTwister random) {
 		this();
 
 		this.random = random;
@@ -127,7 +128,7 @@ public class DorogovtsevMendesGenerator extends BaseGenerator {
 	 * @see org.graphstream.algorithm.generator.Generator#begin()
 	 */
 	public void begin() {
-		this.random = this.random == null ? new Random(
+		this.random = this.random == null ? new MersenneTwister(
 				System.currentTimeMillis()) : this.random;
 
 		addNode("0");

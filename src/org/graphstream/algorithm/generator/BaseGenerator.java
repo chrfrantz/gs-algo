@@ -32,7 +32,7 @@
 package org.graphstream.algorithm.generator;
 
 import java.util.ArrayList;
-import java.util.Random;
+import org.graphstream.algorithm.util.MersenneTwister;
 
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.AdjacencyListGraph;
@@ -106,7 +106,7 @@ public abstract class BaseGenerator extends SourceBase implements Generator {
 	/**
 	 * The random number generator.
 	 */
-	protected Random random = new Random();
+	protected MersenneTwister random = new MersenneTwister();
 
 	/**
 	 * Set the node label attribute using the identifier?.
@@ -159,7 +159,6 @@ public abstract class BaseGenerator extends SourceBase implements Generator {
 	public BaseGenerator(boolean directed, boolean randomlyDirectedEdges) {
 		super(String.format("generator-%08x", generatorId++));
 		setDirectedEdges(directed, randomlyDirectedEdges);
-
 		nodeAttributeRange[0] = 0;
 		nodeAttributeRange[1] = 1;
 		edgeAttributeRange[0] = 0;
