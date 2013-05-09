@@ -31,8 +31,21 @@
  */
 package org.graphstream.algorithm;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.Stack;
 
+import org.graphstream.algorithm.util.MersenneTwister;
 import org.graphstream.algorithm.util.RandomTools;
 import org.graphstream.graph.*;
 import org.graphstream.stream.GraphReplay;
@@ -613,7 +626,7 @@ public class Toolkit extends
 	 * @complexity O(1).
 	 */
 	public static Node randomNode(Graph graph) {
-		return randomNode(graph, new Random());
+		return randomNode(graph, new MersenneTwister());
 	}
 
 	/**
@@ -624,7 +637,7 @@ public class Toolkit extends
 	 * @return A node chosen at random, null if the graph is empty.
 	 * @complexity O(1).
 	 */
-	public static Node randomNode(Graph graph, Random random) {
+	public static Node randomNode(Graph graph, MersenneTwister random) {
 		int n = graph.getNodeCount();
 
 		if (n > 0) {
@@ -649,7 +662,7 @@ public class Toolkit extends
 	 * @complexity O(1).
 	 */
 	public static Edge randomEdge(Graph graph) {
-		return randomEdge(graph, new Random());
+		return randomEdge(graph, new MersenneTwister());
 	}
 
 	/**
@@ -659,7 +672,7 @@ public class Toolkit extends
 	 *            The random number generator to use.
 	 * @return O(1).
 	 */
-	public static Edge randomEdge(Graph graph, Random random) {
+	public static Edge randomEdge(Graph graph, MersenneTwister random) {
 		int n = graph.getEdgeCount();
 
 		if (n > 0) {
@@ -683,7 +696,7 @@ public class Toolkit extends
 	 * @return O(1).
 	 */
 	public static Edge randomEdge(Node node) {
-		return randomEdge(node, new Random());
+		return randomEdge(node, new MersenneTwister());
 	}
 
 	/**
@@ -693,7 +706,7 @@ public class Toolkit extends
 	 * @return O(1).
 	 */
 	public static Edge randomInEdge(Node node) {
-		return randomInEdge(node, new Random());
+		return randomInEdge(node, new MersenneTwister());
 	}
 
 	/**
@@ -704,7 +717,7 @@ public class Toolkit extends
 	 * @complexity O(1).
 	 */
 	public static Edge randomOutEdge(Node node) {
-		return randomOutEdge(node, new Random());
+		return randomOutEdge(node, new MersenneTwister());
 	}
 
 	/**
@@ -715,7 +728,7 @@ public class Toolkit extends
 	 * @return An edge chosen at random, null if the node has no edges.
 	 * @complexity O(1).
 	 */
-	public static Edge randomEdge(Node node, Random random) {
+	public static Edge randomEdge(Node node, MersenneTwister random) {
 		int n = node.getDegree();
 
 		if (n > 0) {
@@ -742,7 +755,7 @@ public class Toolkit extends
 	 * @return An edge chosen at random, null if the node has no entering edges.
 	 * @complexity O(1).
 	 */
-	public static Edge randomInEdge(Node node, Random random) {
+	public static Edge randomInEdge(Node node, MersenneTwister random) {
 		int n = node.getInDegree();
 
 		if (n > 0) {
@@ -769,7 +782,7 @@ public class Toolkit extends
 	 * @return An edge chosen at random, null if the node has no leaving edges.
 	 * @complexity O(1).
 	 */
-	public static Edge randomOutEdge(Node node, Random random) {
+	public static Edge randomOutEdge(Node node, MersenneTwister random) {
 		int n = node.getOutDegree();
 
 		if (n > 0) {
@@ -1737,7 +1750,7 @@ public class Toolkit extends
 	 * @complexity O(<code>k</code>)
 	 */
 	public static <T extends Node> List<T> randomNodeSet(Graph graph, int k) {
-		return randomNodeSet(graph, k, new Random());
+		return randomNodeSet(graph, k, new MersenneTwister());
 	}
 
 	/**
@@ -1757,7 +1770,7 @@ public class Toolkit extends
 	 * @complexity O(<code>k</code>)
 	 */
 	public static <T extends Node> List<T> randomNodeSet(Graph graph, int k,
-			Random random) {
+			MersenneTwister random) {
 		if (k < 0 || k > graph.getNodeCount())
 			throw new IllegalArgumentException("k must be between 0 and "
 					+ graph.getNodeCount());
@@ -1784,7 +1797,7 @@ public class Toolkit extends
 	 *             number of nodes.
 	 */
 	public static <T extends Node> List<T> randomNodeSet(Graph graph, double p) {
-		return randomNodeSet(graph, p, new Random());
+		return randomNodeSet(graph, p, new MersenneTwister());
 	}
 
 	/**
@@ -1804,7 +1817,7 @@ public class Toolkit extends
 	 *             number of nodes.
 	 */
 	public static <T extends Node> List<T> randomNodeSet(Graph graph, double p,
-			Random random) {
+			MersenneTwister random) {
 		if (p < 0 || p > 1)
 			throw new IllegalArgumentException("p must be between 0 and 1");
 		Set<Integer> subset = RandomTools.randomPsubset(graph.getNodeCount(),
@@ -1830,7 +1843,7 @@ public class Toolkit extends
 	 * @complexity O(<code>k</code>)
 	 */
 	public static <T extends Edge> List<T> randomEdgeSet(Graph graph, int k) {
-		return randomEdgeSet(graph, k, new Random());
+		return randomEdgeSet(graph, k, new MersenneTwister());
 	}
 
 	/**
@@ -1850,7 +1863,7 @@ public class Toolkit extends
 	 * @complexity O(<code>k</code>)
 	 */
 	public static <T extends Edge> List<T> randomEdgeSet(Graph graph, int k,
-			Random random) {
+			MersenneTwister random) {
 		if (k < 0 || k > graph.getEdgeCount())
 			throw new IllegalArgumentException("k must be between 0 and "
 					+ graph.getEdgeCount());
@@ -1877,7 +1890,7 @@ public class Toolkit extends
 	 *             number of edges.
 	 */
 	public static <T extends Edge> List<T> randomEdgeSet(Graph graph, double p) {
-		return randomEdgeSet(graph, p, new Random());
+		return randomEdgeSet(graph, p, new MersenneTwister());
 	}
 
 	/**
@@ -1897,7 +1910,7 @@ public class Toolkit extends
 	 *             number of edges.
 	 */
 	public static <T extends Edge> List<T> randomEdgeSet(Graph graph, double p,
-			Random random) {
+			MersenneTwister random) {
 		if (p < 0 || p > 1)
 			throw new IllegalArgumentException("p must be between 0 and 1");
 		Set<Integer> subset = RandomTools.randomPsubset(graph.getEdgeCount(),

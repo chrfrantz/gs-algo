@@ -35,9 +35,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Comparator;
-import java.util.Random;
 
 import org.graphstream.algorithm.DynamicAlgorithm;
+import org.graphstream.algorithm.util.MersenneTwister;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
@@ -214,7 +214,7 @@ public class RandomWalk extends SinkAdapter implements DynamicAlgorithm {
 		/**
 		 * Random number generator.
 		 */
-		protected Random random;
+		protected MersenneTwister random;
 
 		/**
 		 * The node tabu list.
@@ -234,7 +234,7 @@ public class RandomWalk extends SinkAdapter implements DynamicAlgorithm {
 			return weightAttribute;
 		}
 		
-		public Random getRandom() {
+		public MersenneTwister getRandom() {
 			return random;
 		}
 		
@@ -305,7 +305,7 @@ public class RandomWalk extends SinkAdapter implements DynamicAlgorithm {
 	 */
 	public RandomWalk(long randomSeed) {
 		this.randomSeed = randomSeed;
-		this.context.random = new Random(randomSeed);
+		this.context.random = new MersenneTwister(randomSeed);
 	}
 
 	/**

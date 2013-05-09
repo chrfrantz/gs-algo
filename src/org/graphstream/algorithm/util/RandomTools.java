@@ -32,7 +32,6 @@
 package org.graphstream.algorithm.util;
 
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 /**
@@ -55,7 +54,7 @@ public class RandomTools {
 	 *             distributed numbers used is e^2 / (e - 1)
 	 * 
 	 */
-	public static double exponential(Random rnd) {
+	public static double exponential(MersenneTwister rnd) {
 		double y, w, u;
 		int z, k;
 		z = -1;
@@ -88,7 +87,7 @@ public class RandomTools {
 	 * @return a pseudorandom number drawn from binomial distribution
 	 * @complexity Average complexity O(np)
 	 */
-	public static int binomial(int n, double p, Random rnd) {
+	public static int binomial(int n, double p, MersenneTwister rnd) {
 		double q = -Math.log(1 - p);
 		int x = 0;
 		double s = 0;
@@ -123,7 +122,7 @@ public class RandomTools {
 	 *             operations take constant time, the complexity is O(k)
 	 */
 	public static Set<Integer> randomKsubset(int n, int k, Set<Integer> subset,
-			Random rnd) {
+			MersenneTwister rnd) {
 		if (subset == null)
 			subset = new HashSet<Integer>(4 * k / 3 + 1);
 		else
@@ -154,7 +153,7 @@ public class RandomTools {
 	 *             operations take constant time, the complexity is O(np)
 	 */
 	public static Set<Integer> randomPsubset(int n, double p,
-			Set<Integer> subset, Random rnd) {
+			Set<Integer> subset, MersenneTwister rnd) {
 		return randomKsubset(n, binomial(n, p, rnd), subset, rnd);
 	}
 }

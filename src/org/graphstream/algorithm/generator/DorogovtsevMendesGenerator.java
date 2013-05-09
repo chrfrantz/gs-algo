@@ -31,8 +31,6 @@
  */
 package org.graphstream.algorithm.generator;
 
-import java.util.Random;
-
 import org.graphstream.algorithm.Toolkit;
 import org.graphstream.algorithm.util.MersenneTwister;
 import org.graphstream.graph.Edge;

@@ -34,9 +34,8 @@ package org.graphstream.ui.layout;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Random;
-
 import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
+import org.graphstream.algorithm.util.MersenneTwister;
 import org.graphstream.graph.implementations.DefaultGraph;
 import org.graphstream.stream.PipeBase;
 import org.graphstream.ui.geom.Point3;
@@ -56,7 +55,7 @@ public class Eades84Layout extends PipeBase implements Layout {
 	HashMap<String, Spring> springs;
 	HashMap<String, EadesParticle> particles;
 
-	Random random;
+	MersenneTwister random;
 
 	int nodeMoved = 0;
 //	LinkedList<LayoutListener> listeners;
@@ -80,7 +79,7 @@ public class Eades84Layout extends PipeBase implements Layout {
 
 		springs = new HashMap<String, Spring>();
 		particles = new HashMap<String, EadesParticle>();
-		random = new Random();
+		random = new MersenneTwister();
 //		listeners = new LinkedList<LayoutListener>();
 
 		high = new Point3(1, 1, 1);
